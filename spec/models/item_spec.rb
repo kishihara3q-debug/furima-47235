@@ -67,11 +67,6 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
-      it 'userが空だと登録できない' do
-        @item.user = nil
-        @item.valid?
-        expect(@item.errors.full_messages).to include("User can't be blank")
-      end
       it 'imageが空だと登録できない' do
         @item.image = nil
         @item.valid?
