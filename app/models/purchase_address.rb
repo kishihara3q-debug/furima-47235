@@ -19,9 +19,9 @@ class PurchaseAddress
     Address.create(postal_code: postal_code,
                    prefecture_id: prefecture_id,
                    city: city,
-                   address_line: address_line
-                   building_name: building_name
-                   phone_number: phone_number
+                   address_line: address_line,
+                   building_name: building_name,
+                   phone_number: phone_number,
                    purchase_id: purchase.id)
   end
 end
