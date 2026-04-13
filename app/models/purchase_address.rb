@@ -1,6 +1,6 @@
 class PurchaseAddress
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :postal_code, :prefecture_id, :city, :address_line, :building_name, :phone_number
+  attr_accessor :user_id, :item_id, :postal_code, :prefecture_id, :city, :address_line, :building_name, :phone_number, :token
 
   with_options presence: true do
     validates :user_id
@@ -9,6 +9,7 @@ class PurchaseAddress
     validates :city
     validates :address_line
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: '10~11桁の数字で半角文字列(ハイフンなし）で入力してください' }
+    validates :token
   end
   validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
 
