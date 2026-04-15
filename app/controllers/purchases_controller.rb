@@ -1,12 +1,14 @@
 class PurchasesController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
+  before_action :move_to_index, only: [:index, :create]
+
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @purchase_address = PurchaseAddress.new
-    @item = Item.find(params[:item_id])
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @purchase_address = PurchaseAddress.new(purchase_params)
     if @purchase_address.valid?
       pay_item
@@ -38,5 +40,15 @@ class PurchasesController < ApplicationController
       card: purchase_params[:token], # カードトークン
       currency: 'jpy' # 通貨の種類（日本円）
     )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
+  def move_to_index
+    return unless @item.purchase.present? || current_user == @item.user
+
+    redirect_to root_path
   end
 end
